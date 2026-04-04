@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { editarUsuario, eliminarUsuario } from './acciones'
+import { editarUsuario, eliminarUsuario, resetPasswordAdmin } from './acciones'
 import Link from 'next/link'
 import {
   Users, Plus, Pencil, Trash2, Save, X, Loader2, Search,
-  ShieldCheck, GraduationCap, BookOpen, Filter, CheckCircle, XCircle
+  ShieldCheck, GraduationCap, BookOpen, Filter, CheckCircle, XCircle, KeyRound
 } from 'lucide-react'
 
 type Usuario = {
@@ -108,6 +108,26 @@ export default function UsuariosClient({ initialUsuarios }: { initialUsuarios: U
         const nombre = formData.get('nombre') as string
         const role = formData.get('role') as string
         setUsuarios(prev => prev.map(u => u.id === id ? { ...u, nombre, role } : u))
+      }
+    })
+  }
+
+  async function handleResetPassword(id: number, nombre: string) {
+    const newPass = prompt(`Ingrese la nueva contraseña para el usuario "${nombre}" (mínimo 6 caracteres):`)
+    if (!newPass) return
+    if (newPass.length < 6) {
+      setMensaje({ tipo: 'error', texto: 'La contraseña debe tener al menos 6 caracteres.' })
+      return
+    }
+    
+    if (!confirm(`¿Confirmas que deseas forzar el cambio de contraseña para "${nombre}"?`)) return
+    
+    startTransition(async () => {
+      const res = await resetPasswordAdmin(id, newPass)
+      if (res?.error) {
+        setMensaje({ tipo: 'error', texto: res.error })
+      } else {
+        setMensaje({ tipo: 'ok', texto: `Contraseña de "${nombre}" actualizada exitosamente.` })
       }
     })
   }
@@ -305,6 +325,9 @@ export default function UsuariosClient({ initialUsuarios }: { initialUsuarios: U
                           </td>
                           <td className="px-6 py-4 text-right">
                             <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <button onClick={() => handleResetPassword(u.id, u.nombre)} className="p-2.5 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-xl transition dark:bg-amber-900/30 dark:hover:bg-amber-900/50 shadow-sm" title="Cambiar Contraseña">
+                                <KeyRound size={16} />
+                              </button>
                               <button onClick={() => setEditandoId(u.id)} className="p-2.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl transition dark:bg-blue-900/30 dark:hover:bg-blue-900/50 shadow-sm" title="Editar">
                                 <Pencil size={16} />
                               </button>
@@ -379,6 +402,9 @@ export default function UsuariosClient({ initialUsuarios }: { initialUsuarios: U
                           {cfgRole.icon} {cfgRole.label}
                         </span>
                         <div className="flex gap-2">
+                          <button onClick={() => handleResetPassword(u.id, u.nombre)} className="w-10 h-10 flex items-center justify-center bg-amber-50 text-amber-600 rounded-xl font-bold dark:bg-amber-900/30 dark:text-amber-300 shadow-sm border border-amber-100 dark:border-amber-800" title="Cambiar Contraseña">
+                             <KeyRound size={16} />
+                          </button>
                           <button onClick={() => setEditandoId(u.id)} className="w-10 h-10 flex items-center justify-center bg-blue-50 text-blue-600 rounded-xl font-bold dark:bg-blue-900/30 dark:text-blue-300 shadow-sm border border-blue-100 dark:border-blue-800">
                              <Pencil size={16} />
                           </button>

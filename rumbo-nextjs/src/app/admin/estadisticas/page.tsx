@@ -161,7 +161,7 @@ export default async function EstadisticasPage() {
                         )}
                       </td>
                       <td className="px-8 py-4 text-center">
-                        <span className={`text-lg font-black ${r.puntaje >= 60 ? 'text-emerald-500' : 'text-orange-500'}`}>
+                        <span className={`text-lg font-black ${r.puntaje >= 50 ? 'text-emerald-500' : (r.puntaje >= 30 ? 'text-orange-500' : 'text-red-500')}`}>
                           {r.puntaje}%
                         </span>
                       </td>

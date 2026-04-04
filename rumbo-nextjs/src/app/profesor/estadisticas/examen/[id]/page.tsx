@@ -190,8 +190,8 @@ export default async function EstadisticasExamenPage({ params }: { params: Promi
                     <p className="text-xs text-slate-400">{(res as any).usuarios?.email}</p>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <div className={`inline-flex items-center px-3 py-1.5 rounded-full font-bold text-xs ${res.puntaje >= 60 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
-                       {res.puntaje} / 100
+                    <div className={`inline-flex items-center px-3 py-1.5 rounded-full font-bold text-xs ${res.puntaje >= 50 ? 'bg-emerald-50 text-emerald-600' : (res.puntaje >= 30 ? 'bg-orange-50 text-orange-600' : 'bg-red-50 text-red-600')}`}>
+                       {res.puntaje}%
                     </div>
                   </td>
                   <td className="px-6 py-4 text-center text-slate-500 font-medium">

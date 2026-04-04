@@ -107,6 +107,7 @@ export default async function ExamResultadoPage({
             ) : (
               <Target size={64} className="mb-4 opacity-90 drop-shadow-md" />
             )}
+            
             <h1 className="text-3xl sm:text-4xl font-extrabold mb-2 drop-shadow-sm">{mensajeTitulo}</h1>
             <p className="text-white/90 font-medium text-lg max-w-lg mb-8 drop-shadow-sm">
               {mensajeCuerpo}
@@ -114,12 +115,7 @@ export default async function ExamResultadoPage({
             
             <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 flex items-center justify-center gap-6 sm:gap-12 border border-white/30 shadow-inner w-full max-w-sm">
                <div className="text-center">
-                 <p className="text-white/80 text-xs font-bold uppercase tracking-wider mb-1">Puntaje</p>
-                 <p className="text-4xl font-black">{aciertos}<span className="text-xl font-medium opacity-70">/{totalPreguntas}</span></p>
-               </div>
-               <div className="w-px h-12 bg-white/30"></div>
-               <div className="text-center">
-                 <p className="text-white/80 text-xs font-bold uppercase tracking-wider mb-1">Aciertos</p>
+                 <p className="text-white/80 text-xs font-bold uppercase tracking-wider mb-1">Calificación</p>
                  <p className="text-4xl font-black">{porcentajeRounded}%</p>
                </div>
             </div>

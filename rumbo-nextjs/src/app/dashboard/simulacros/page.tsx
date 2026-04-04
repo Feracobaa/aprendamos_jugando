@@ -103,7 +103,7 @@ export default async function SimulacrosDashboardPage() {
                         </td>
                         <td className="px-5 py-4 text-center font-black">
                           {sim.estado === 'completado' && sim.simulacro_resultados && sim.simulacro_resultados.length > 0 ? (
-                            <span className={sim.simulacro_resultados[0].puntaje_total >= 60 ? 'text-emerald-600 dark:text-emerald-400 block text-lg' : 'text-orange-600 dark:text-orange-400 block text-lg'}>
+                            <span className={sim.simulacro_resultados[0].puntaje_total >= 50 ? 'text-emerald-600 dark:text-emerald-400 block text-lg' : (sim.simulacro_resultados[0].puntaje_total >= 30 ? 'text-orange-600 dark:text-orange-400 block text-lg' : 'text-red-600 dark:text-red-400 block text-lg')}>
                               {Math.round(sim.simulacro_resultados[0].puntaje_total)}<span className="text-xs font-medium text-muted-light">/100</span>
                             </span>
                           ) : (
@@ -146,7 +146,7 @@ export default async function SimulacrosDashboardPage() {
                     <p className="text-xs text-muted">{new Date(sim.inicio || sim.created_at).toLocaleString('es-ES')}</p>
                     <div className="flex items-center justify-between">
                       {sim.estado === 'completado' && sim.simulacro_resultados?.length > 0 ? (
-                        <span className={`text-xl font-black ${sim.simulacro_resultados[0].puntaje_total >= 60 ? 'text-emerald-600 dark:text-emerald-400' : 'text-orange-600 dark:text-orange-400'}`}>
+                        <span className={`text-xl font-black ${sim.simulacro_resultados[0].puntaje_total >= 50 ? 'text-emerald-600 dark:text-emerald-400' : (sim.simulacro_resultados[0].puntaje_total >= 30 ? 'text-orange-600 dark:text-orange-400' : 'text-red-600 dark:text-red-400')}`}>
                           {Math.round(sim.simulacro_resultados[0].puntaje_total)}/100
                         </span>
                       ) : <span className="text-muted-light">—</span>}

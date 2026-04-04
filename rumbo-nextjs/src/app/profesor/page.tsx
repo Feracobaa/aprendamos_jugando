@@ -143,7 +143,7 @@ export default async function ProfesorHome() {
                 ultimasEvaluaciones.map((res: any, index: number) => (
                   <div key={`${res.id}-${index}`} className="flex items-center gap-4 p-3 hover:bg-card-hover rounded-2xl transition group">
                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-sm shadow-sm ${
-                       res.puntaje >= 60 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30' : 'bg-orange-50 text-orange-600 dark:bg-orange-900/30'
+                       res.puntaje >= 50 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30' : (res.puntaje >= 30 ? 'bg-orange-50 text-orange-600 dark:bg-orange-900/30' : 'bg-red-50 text-red-600 dark:bg-red-900/30')
                      }`}>
                        {res.puntaje}%
                      </div>

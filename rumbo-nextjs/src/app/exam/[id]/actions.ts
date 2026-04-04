@@ -45,7 +45,7 @@ export async function submitExam(examId: number, respuestas: Record<string, stri
     .insert({
       estudiante_id: estudianteId,
       examen_id: examId,
-      puntaje: puntajeTotal
+      puntaje: Math.round((puntajeTotal / preguntas.length) * 100)
     })
     .select()
     .single()

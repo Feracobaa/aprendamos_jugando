@@ -133,9 +133,9 @@ export default async function AdminHome() {
                 ultimasEvaluaciones.map((res: any) => (
                   <div key={res.id} className="flex items-center gap-4 p-3 hover:bg-card-hover rounded-2xl transition group">
                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-sm shadow-sm ${
-                       res.puntaje >= 60 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30' : 'bg-orange-50 text-orange-600 dark:bg-orange-900/30'
+                       res.puntaje >= 50 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30' : (res.puntaje >= 30 ? 'bg-orange-50 text-orange-600 dark:bg-orange-900/30' : 'bg-red-50 text-red-600 dark:bg-red-900/30')
                      }`}>
-                       {res.puntaje}
+                       {res.puntaje}%
                      </div>
                      <div className="flex-1 min-w-0">
                         <p className="text-sm font-bold text-foreground truncate">{res.usuarios?.nombre || 'Estudiante'}</p>

@@ -78,12 +78,12 @@ export default async function ResultadosPage() {
                     </p>
                   </div>
 
-                  <div className="flex flex-col flex-shrink-0 items-center justify-center bg-teal-50 border border-teal-100 px-6 py-3 sm:py-4 rounded-2xl min-w-[120px] sm:min-w-[140px] dark:bg-teal-900/20 dark:border-teal-800">
-                    <span className="text-xs sm:text-sm font-bold text-teal-600 dark:text-teal-400 mb-1 flex items-center gap-1 uppercase tracking-wider">
-                      <CheckCircle2 size={14} /> Aciertos
+                  <div className={`flex flex-col flex-shrink-0 items-center justify-center px-6 py-3 sm:py-4 rounded-2xl min-w-[120px] sm:min-w-[140px] border ${res.puntaje >= 50 ? 'bg-emerald-50 border-emerald-100 dark:bg-emerald-900/20 dark:border-emerald-800' : (res.puntaje >= 30 ? 'bg-orange-50 border-orange-100 dark:bg-orange-900/20 dark:border-orange-800' : 'bg-red-50 border-red-100 dark:bg-red-900/20 dark:border-red-800')}`}>
+                    <span className={`text-xs sm:text-sm font-bold mb-1 flex items-center gap-1 uppercase tracking-wider ${res.puntaje >= 50 ? 'text-emerald-600 dark:text-emerald-400' : (res.puntaje >= 30 ? 'text-orange-600 dark:text-orange-400' : 'text-red-600 dark:text-red-400')}`}>
+                      <CheckCircle2 size={14} /> Nota
                     </span>
-                    <span className="text-3xl sm:text-4xl font-black text-teal-700 dark:text-teal-300">
-                      {res.puntaje}
+                    <span className={`text-3xl sm:text-4xl font-black ${res.puntaje >= 50 ? 'text-emerald-700 dark:text-emerald-300' : (res.puntaje >= 30 ? 'text-orange-700 dark:text-orange-300' : 'text-red-700 dark:text-red-300')}`}>
+                      {res.puntaje}%
                     </span>
                   </div>
                 </div>

@@ -109,3 +109,52 @@ export async function eliminarUsuario(id: number) {
   revalidatePath('/admin/usuarios')
   return { success: true }
 }
+
+/**
+ * Resetea la contraseña de un usuario usando el Service Role de Supabase.
+ */
+export async function resetPasswordAdmin(publicUserId: number, newPassword: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado.' }
+
+  const { data: perfil } = await supabase.from('usuarios').select('role').eq('email', user.email).single()
+  if (perfil?.role !== 'admin') return { error: 'Acceso denegado. Se requiere rol de administrador.' }
+
+  if (newPassword.length < 6) return { error: 'La nueva contraseña debe tener al menos 6 caracteres.' }
+
+  // 1. Obtener email del usuario público
+  const { data: targetUser } = await supabase.from('usuarios').select('email').eq('id', publicUserId).single()
+  if (!targetUser || !targetUser.email) return { error: 'Usuario no encontrado.' }
+
+  // 2. Crear cliente Admin (evitando inicialización global si no se necesita en todo el archivo)
+  const { createClient: createSupabaseClient } = await import('@supabase/supabase-js')
+  const supabaseAdmin = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  // 3. Buscar el UUID en auth.users a través del email
+  const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers()
+  if (listError) return { error: `Error buscando en Auth: ${listError.message}` }
+
+  const authUserTarget = listData.users.find((u: any) => u.email === targetUser.email)
+  if (!authUserTarget) return { error: 'No se encontró el registro de Auth asociado a este correo.' }
+
+  // 4. Actualizar contraseña
+  const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+    authUserTarget.id,
+    { password: newPassword }
+  )
+
+  if (updateError) {
+    console.error('Error admin update config:', updateError)
+    return { error: `No se pudo cambiar la contraseña: ${updateError.message}` }
+  }
+
+  // 5. Opcional: Actualizar the public table to sync the fake text password if that was their architecture, 
+  // but better to just update it in public if they are storing it raw (which they are, see schema: password VARCHAR(255)).
+  await supabaseAdmin.from('usuarios').update({ password: newPassword }).eq('id', publicUserId)
+
+  return { success: true }
+}
