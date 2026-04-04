@@ -30,8 +30,22 @@ export default async function DashboardPage({
 
   if (!perfil) {
     return (
-      <div className="p-8 text-center text-red-500 bg-red-50 rounded-lg">
-        Tu usuario no está sincronizado en la base de datos pública. Por favor asegúrate de ejecutar el Trigger de usuarios.
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="bg-card border border-red-200 dark:border-red-800 rounded-2xl shadow-lg p-8 max-w-md w-full text-center space-y-6">
+          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto">
+            <AlertCircle size={32} className="text-red-500" />
+          </div>
+          <h2 className="text-xl font-extrabold text-foreground">Cuenta no encontrada</h2>
+          <p className="text-muted text-sm leading-relaxed">
+            Tu sesión de autenticación existe, pero tu perfil fue eliminado de la plataforma por un administrador.
+            Por favor, cierra sesión y contacta al administrador si crees que es un error.
+          </p>
+          <form action="/auth/signout" method="post">
+            <button className="w-full bg-red-600 hover:bg-red-700 text-white rounded-xl py-3 font-bold transition-colors shadow-md flex items-center justify-center gap-2">
+              <LogOut size={18} /> Cerrar Sesión
+            </button>
+          </form>
+        </div>
       </div>
     )
   }
