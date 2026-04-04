@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* ============================================
+   DESIGN TOKENS — LIGHT MODE (default)
+   ============================================ */
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --card-hover: #f1f5f9;
+  --muted: #64748b;
+  --muted-light: #94a3b8;
+  --input-bg: #f1f5f9;
+  --input-border: #e2e8f0;
+  --input-focus: #2dd4bf;
+  --nav-bg: #ffffff;
+  --nav-border: #e2e8f0;
+  --badge-bg: #f1f5f9;
+  --badge-border: #e2e8f0;
+  --table-header-bg: #f8fafc;
+  --table-row-hover: #f8fafc;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================
+   DESIGN TOKENS — DARK MODE
+   ============================================ */
+.dark {
+  --background: #0f172a;
+  --foreground: #e2e8f0;
+  --card: #1e293b;
+  --card-border: #334155;
+  --card-hover: #334155;
+  --muted: #94a3b8;
+  --muted-light: #64748b;
+  --input-bg: #1e293b;
+  --input-border: #334155;
+  --input-focus: #2dd4bf;
+  --nav-bg: #1e293b;
+  --nav-border: #334155;
+  --badge-bg: #334155;
+  --badge-border: #475569;
+  --table-header-bg: #1e293b;
+  --table-row-hover: #1e293b;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-card-hover: var(--card-hover);
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+  --color-input-bg: var(--input-bg);
+  --color-input-border: var(--input-border);
+  --color-nav-bg: var(--nav-bg);
+  --color-nav-border: var(--nav-border);
+  --color-badge-bg: var(--badge-bg);
+  --color-badge-border: var(--badge-border);
+  --color-table-header-bg: var(--table-header-bg);
+  --color-table-row-hover: var(--table-row-hover);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth theme transitions for common elements */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Exclude animations/transforms from the global transition */
+a, button, input, select, textarea {
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
