@@ -98,13 +98,13 @@ export default function GestionPreguntas({ examId }: { examId: number }) {
             <div key={l} className="space-y-2">
               <label className="text-xs font-bold text-muted-light ml-1">Opción {l}</label>
               <div className="flex bg-input-bg border border-input-border rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-teal-500 transition">
-                <div className="bg-badge-bg border-r border-input-border px-4 flex items-center justify-center font-bold text-muted">
+                <div className="bg-badge-bg border-r border-input-border px-3 sm:px-4 flex items-center justify-center font-bold text-muted shrink-0">
                   {l}
                 </div>
                 <input
                   type="text"
                   name={`opcion_${l.toLowerCase()}`}
-                  className="w-full px-3 py-2 bg-transparent focus:outline-none text-foreground"
+                  className="w-full min-w-0 px-3 py-2 bg-transparent focus:outline-none text-foreground"
                   required
                 />
               </div>
@@ -114,7 +114,7 @@ export default function GestionPreguntas({ examId }: { examId: number }) {
 
         <hr className="border-card-border my-4" />
 
-        <div className="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4 bg-blue-50/50 p-4 rounded-xl border border-blue-100 dark:bg-blue-900/10 dark:border-blue-900/30">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-blue-50/50 p-4 rounded-xl border border-blue-100 dark:bg-blue-900/10 dark:border-blue-900/30">
            <div className="w-full sm:w-auto space-y-2">
              <label className="text-sm font-bold text-foreground ml-1">Respuesta Correcta</label>
              <select name="respuesta_correcta" className="w-full sm:w-48 bg-input-bg border border-input-border rounded-lg px-4 py-2 text-foreground font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
@@ -135,10 +135,10 @@ export default function GestionPreguntas({ examId }: { examId: number }) {
            <button 
             type="submit" 
             disabled={loading}
-            className="flex items-center gap-2 px-8 py-3 rounded-xl font-bold bg-teal-600 hover:bg-teal-700 text-white disabled:bg-slate-300 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
+            className="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-4 rounded-xl font-bold bg-teal-600 hover:bg-teal-700 text-white disabled:bg-slate-300 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
            >
              {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-             Confirmar y Guardar Pregunta
+             Agregar a la Batería
            </button>
         </div>
       </form>

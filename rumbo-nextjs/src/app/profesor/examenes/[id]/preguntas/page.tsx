@@ -83,6 +83,16 @@ export default async function PreguntasEditorPage({ params }: { params: Promise<
 
       <GestionPreguntas examId={examId} />
 
+      {/* Botón de Finalizar Examen */}
+      <div className="mt-8 flex justify-end">
+        <Link 
+          href="/profesor/examenes"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-lg py-4 px-8 rounded-2xl shadow-xl hover:shadow-blue-500/30 transition-all hover:-translate-y-1"
+        >
+          Guardar y Finalizar Examen &rarr;
+        </Link>
+      </div>
+
     </div>
   )
 }
