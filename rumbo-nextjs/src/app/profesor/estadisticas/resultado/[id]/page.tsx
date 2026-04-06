@@ -13,7 +13,7 @@ export default async function DetalleResultadoEstudiante({ params }: { params: P
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const { data: perfil } = await supabase.from('usuarios').select('id').eq('email', user.email).single()
+  const { data: perfil } = await supabase.from('usuarios').select('id, role').eq('email', user.email).single()
   if (!perfil) return null
 
   // 1. Obtener resultado y verificar seguridad
@@ -23,13 +23,15 @@ export default async function DetalleResultadoEstudiante({ params }: { params: P
     .eq('id', resultadoId)
     .single()
 
-  // Si no existe o no le pertenece a este profesor
-  if (!resultado || (resultado as any).examenes?.admin_id !== perfil.id) {
+  // Si no existe o no le pertenece a este profesor (y no es admin)
+  if (!resultado || (perfil.role !== 'admin' && (resultado as any).examenes?.admin_id !== perfil.id)) {
     redirect('/profesor/estadisticas')
   }
 
   const examenId = resultado.examen_id
   const estudianteId = resultado.estudiante_id
+
+  const backUrl = perfil.role === 'admin' ? '/admin/estadisticas' : `/profesor/estadisticas/examen/${examenId}`
 
   // 2. Obtener respuestas específicas de este intento
   const { data: respuestas } = await supabase
@@ -50,8 +52,8 @@ export default async function DetalleResultadoEstudiante({ params }: { params: P
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto py-4">
-      <Link href={`/profesor/estadisticas/examen/${examenId}`} className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition font-medium mb-6">
-        <ArrowLeft size={18} /> Volver a Estadísticas del Examen
+      <Link href={backUrl} className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition font-medium mb-6">
+        <ArrowLeft size={18} /> Volver a {perfil.role === 'admin' ? 'Estadísticas Globales' : 'Estadísticas del Examen'}
       </Link>
 
       {/* Header Panel */}

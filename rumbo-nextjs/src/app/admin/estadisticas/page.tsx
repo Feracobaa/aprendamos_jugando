@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import {
   Users, GraduationCap, BookOpen, ShieldCheck, FileText,
   CheckCircle2, BarChart3, TrendingUp, Eye, Brain, Sparkles,
@@ -136,7 +137,8 @@ export default async function EstadisticasPage() {
                 <th className="px-8 py-4">Examen</th>
                 <th className="px-8 py-4 text-center">Nivel</th>
                 <th className="px-8 py-4 text-center">Puntaje</th>
-                <th className="px-8 py-4 text-right">Fecha</th>
+                <th className="px-8 py-4 text-center">Fecha</th>
+                <th className="px-8 py-4 text-right">Acción</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-card-border">
@@ -165,8 +167,13 @@ export default async function EstadisticasPage() {
                           {r.puntaje}%
                         </span>
                       </td>
-                      <td className="px-8 py-4 text-right text-xs text-muted-light font-bold">
+                      <td className="px-8 py-4 text-center text-xs text-muted-light font-bold">
                         {new Date(r.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
+                      </td>
+                      <td className="px-8 py-4 text-right">
+                        <Link href={`/profesor/estadisticas/resultado/${r.id}`} className="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-lg text-[10px] font-black uppercase tracking-wider transition-all border border-indigo-500/20">
+                          <Eye size={12} /> Detalles
+                        </Link>
                       </td>
                     </tr>
                   )

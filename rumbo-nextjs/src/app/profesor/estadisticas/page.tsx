@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import {
   Users, GraduationCap, BookOpen, FileText,
   CheckCircle2, BarChart3, TrendingUp, Eye, Brain, Sparkles,
@@ -138,7 +139,8 @@ export default async function EstadisticasProfesorPage() {
                 <th className="px-8 py-4">Examen</th>
                 <th className="px-8 py-4 text-center">Nivel</th>
                 <th className="px-8 py-4 text-center">Puntaje</th>
-                <th className="px-8 py-4 text-right">Fecha</th>
+                <th className="px-8 py-4 text-center">Fecha</th>
+                <th className="px-8 py-4 text-right">Acción</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-card-border">
@@ -174,11 +176,16 @@ export default async function EstadisticasProfesorPage() {
                           {r.puntaje}%
                         </span>
                       </td>
-                      <td className="px-8 py-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5 text-xs text-muted-light font-medium uppercase tracking-tight">
+                      <td className="px-8 py-4 text-center">
+                        <div className="flex items-center justify-center gap-1.5 text-xs text-muted-light font-medium uppercase tracking-tight">
                            <Clock size={12} />
                            {new Date(r.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
                         </div>
+                      </td>
+                      <td className="px-8 py-4 text-right">
+                        <Link href={`/profesor/estadisticas/resultado/${r.id}`} className="inline-flex items-center gap-1 px-3 py-1.5 bg-teal-500/10 text-teal-600 hover:bg-teal-500 hover:text-white rounded-lg text-[9px] font-black uppercase tracking-wider transition-all border border-teal-500/20">
+                          <Eye size={12} /> Detalles
+                        </Link>
                       </td>
                     </tr>
                   )
