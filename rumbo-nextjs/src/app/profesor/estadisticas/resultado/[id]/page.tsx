@@ -45,6 +45,9 @@ export default async function DetalleResultadoEstudiante({ params }: { params: P
     .eq('examen_id', examenId)
     .order('timestamp', { ascending: false })
 
+  const aciertos = respuestas?.filter(r => r.es_correcta).length || 0;
+  const desaciertos = (respuestas?.length || 0) - aciertos;
+
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto py-4">
       <Link href={`/profesor/estadisticas/examen/${examenId}`} className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition font-medium mb-6">
@@ -73,7 +76,11 @@ export default async function DetalleResultadoEstudiante({ params }: { params: P
 
          <div className="relative z-10 bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm min-w-[200px]">
             <p className="text-slate-400 font-bold text-sm tracking-widest uppercase mb-1">Calificación</p>
-            <p className="text-5xl font-black">{resultado.puntaje}</p>
+            <p className="text-5xl font-black mb-2">{resultado.puntaje}%</p>
+            <div className="flex justify-center gap-4 text-xs font-bold uppercase tracking-wider">
+              <span className="text-emerald-400">{aciertos} Aciertos</span>
+              <span className="text-red-400">{desaciertos} Desaciertos</span>
+            </div>
          </div>
       </div>
 

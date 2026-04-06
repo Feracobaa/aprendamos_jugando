@@ -57,9 +57,13 @@ export default async function ExamResultadoPage({
 
   // Cálculos
   const totalPreguntas = respuestas.length
-  const aciertos = resultado.puntaje
-  const porcentaje = totalPreguntas > 0 ? (aciertos / totalPreguntas) * 100 : 0
-  const porcentajeRounded = Math.round(porcentaje)
+  
+  // En la BD 'puntaje' ya guarda el porcentaje (0 a 100)
+  const porcentajeRounded = resultado.puntaje
+  
+  // Contamos la cantidad real de aciertos y desaciertos
+  const aciertos = respuestas.filter(r => r.es_correcta).length
+  const desaciertos = totalPreguntas - aciertos
 
   // Mensaje Motivacional
   let mensajeTitulo = ''
@@ -117,6 +121,11 @@ export default async function ExamResultadoPage({
                <div className="text-center">
                  <p className="text-white/80 text-xs font-bold uppercase tracking-wider mb-1">Calificación</p>
                  <p className="text-4xl font-black">{porcentajeRounded}%</p>
+               </div>
+               <div className="text-center">
+                 <p className="text-white/80 text-xs font-bold uppercase tracking-wider mb-1">Resultado</p>
+                 <p className="text-sm font-bold text-emerald-100">{aciertos} Aciertos</p>
+                 <p className="text-sm font-bold text-rose-200">{desaciertos} Desaciertos</p>
                </div>
             </div>
           </div>
