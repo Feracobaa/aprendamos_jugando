@@ -20,7 +20,7 @@ export default async function ProfesorLayout({ children }: { children: React.Rea
     .eq('email', user.email)
     .single()
 
-  if (!perfil || perfil.role !== 'profesor') {
+  if (!perfil || (perfil.role !== 'profesor' && perfil.role !== 'admin')) {
     redirect('/dashboard')
   }
 
